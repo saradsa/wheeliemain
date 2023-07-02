@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content%}
+
+<p>Are you sure you want to delete your review?</p>
+
+<form action="{% url 'delete_review' review.id %}" method="POST">
+    {% csrf_token %}
+    <a href="{% url 'home' %}">Cancel</a>
+
+    <input type="submit" value="Confirm">
+</form>
+
+{% endblock %}

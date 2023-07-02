@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cash on Delivery</title>
+</head>
+<body>
+    <h3>Your order amount is {{destination.price}}</h3>
+    <!-- Place this where you need payment button -->
+    <button id="payment-button"><a href="{%url 'submit_order' %}">Confirm Order</a></button>
+</body>
+</html>

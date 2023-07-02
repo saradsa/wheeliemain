@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>Your order amount is : {{destination.price}}</h3>
+    <form action="https://uat.esewa.com.np/epay/main" method="POST">
+    <input value="{{destination.price}}" name="tAmt" type="hidden">
+    <input value="{{destination.price}}" name="amt" type="hidden">
+    <input value="0" name="txAmt" type="hidden">
+    <input value="0" name="psc" type="hidden">
+    <input value="0" name="pdc" type="hidden">
+    <input value="EPAYTEST" name="scd" type="hidden">
+    <input value="order_{{destination.id}}" name="pid" type="hidden">
+    <input value="http://merchant.com.np/page/esewa_payment_success?q=su" type="hidden" name="su"> 
+    <input value="{{request.build_absolute_uri}}" type="hidden" name="fu">
+    <input value="Submit" type="submit">
+    </form>
+
+    <!-- <script>
+        var path="https://uat.esewa.com.np/epay/main";
+        var params= {
+            amt: "{{destination.price}}",
+            psc: 0,
+            pdc: 0,
+            txAmt: 0,
+            tAmt: "{{destination.price}}",
+            pid: "{{destination.id}}",
+            scd: "EPAYTEST",
+            su: "http://127.0.0.1:8000",
+            fu: "{{request.build_absolute_url}}"
+        }
+
+        function post(path, params) {
+            var form = document.createElement("form");
+            form.setAttribute("method", "POST");
+            form.setAttribute("action", path);
+
+            for(var key in params) {
+                var hiddenField = document.createElement("input");
+                hiddenField.setAttribute("type", "hidden");
+                hiddenField.setAttribute("name", key);
+                hiddenField.setAttribute("value", params[key]);
+                form.appendChild(hiddenField);
+            }
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+    </script> -->
+</body>
+</html>

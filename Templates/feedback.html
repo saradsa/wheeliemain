@@ -1,0 +1,33 @@
+{% extends 'base.html'%} {% load static %} {% static "images" as baseUrl %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        form p{
+            padding: 10px;
+        }
+        input{
+            width: 400px;
+        }
+    </style>
+</head>
+<body>
+
+    {% block content %}
+
+    <div class="" style="padding: 20px; height: 100vh;">
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit" value="Post your feedback" style="text-align: center; background-color: #00372f; color: white;">
+        </form>
+    </div>
+    
+
+    {% endblock %}
+
+</body>
+</html>

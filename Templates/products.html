@@ -1,0 +1,64 @@
+{% extends 'base.html'%} {% load static %} {% static "images" as baseUrl %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STROLL</title>
+
+    <script src="https://kit.fontawesome.com/825b56df51.js" crossorigin="anonymous"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/stroll-media.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+   
+</head>
+
+<body>
+    
+
+    {% block content%}
+
+    <div id="about">
+
+    </div>
+    <div class="container4" id="container4">
+        <div class="container" id="container">
+            <h4><span class="st-line"></span>&nbsp;&nbsp; Trending Wheelchairs Offer</h4>
+            <h2 class="head2">Popular WheelChairs</h2>
+            <div class="grid-images">
+                {% for product in products %}
+                <div data-product= "{{product.id}}" data-action="add" class="g-img products-wheel update-cart">
+                    <img src="{{product.imageURL}}" alt="" style="border-bottom: 1px solid black; z-index: 0;">
+                    
+                    <div class="wheel-overlay" aria-label="You are hovering over {{product.name}} which costs {{product.price}}.Click on top-right to add to cart.">
+                        <h3 style="color: white; font-size: 19px; margin-top: 15px;">{{product.name}}</h3>
+                        <p style="color: white; font-size: 19px; margin-top: 35px; text-align: right;">$&nbsp;{{product.price}}</p>
+                        <<!--button aria-label="Add to Cart, click to add the product to the cart." data-product= "{{product.id}}"  class="btn btn-outline-secondary add-btn update-cart" style="background-color: #fff; color: #000; border: none; border-radius: 10px; margin-left: 250px;">Add to cart</button>-->
+                    </div>
+
+                    <div class="add"><p class="title"><span>Add to Cart</span></p></div>
+                    
+                    
+                    
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    
+    {% endblock %}
+    
+</body>
+
+
+
+

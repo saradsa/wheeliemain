@@ -1,0 +1,128 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+<!--<div class="container1">
+    <div class="title">
+        <h2 aria-label="Wheelie logo ."><a href="{% url 'home' %}"><i class="fa-solid fa-wheelchair-move stroll-icon"></i>heelie</a></h2>
+        {% if request.user.is_authenticated%}
+        <span>Hello, {{request.user}}</span>
+        <span><a href="{% url 'logout'%}">Logout</a></span>
+        {% endif %}
+        <div><a href="{%url 'user-profile'%}" style="list-style:none"><li style="color: white;"> See Your Orders</li></a></div>
+    </div>
+    <div aria-label="navigation bar with 4 links home about destinations blog contact" role="nav" class="menu">
+
+        <li><a href="{% url 'home' %}">HOME</a></li>
+        <li><a href="#">ABOUT</a></li>
+        <li><a href="#container4">DESTINATIONS</a></li>
+        <li>
+            <a href="#">BLOG<i class='bx bx-chevron-down'></i></a>
+            <ul class="dropdown">
+                <li>BLOG</li>
+                <li>BLOG SINGLE</li>
+                <li>LANDING PAGE</li>
+            </ul>
+        </li>
+        <li><a href="{% url 'products' %}">PRODUCTS</a></li>
+
+    </div>
+        <div class="form">
+            <form aria-label="input text for search"  method="get" action="/search">
+            <input type="search" placeholder="search location" name="query" id="query" required>
+            <button aria-label = "search-button" class="search" type="submit"><i class="fa-solid fa-magnifying-glass glass"></i></button>
+            </form>
+        </div>
+
+        <span onclick="change_icon()" id="dark" ><i class="bi bi-brightness-high on" id="light"></i></span>
+
+        <div class="from-inline my-2 my-lg-0">
+            <a href="{% url 'cart' %}">
+                <img id ="cart-icon" src="{% static 'images/cart.png'%}" alt="">
+            </a>
+            <span class="badge badge-info background-yellow">{{cartItems}}</span>
+        </div> 
+</div>-->
+
+<header class="header">
+    <nav class="leftnav" aria-label="naviation list with home, about and destination">
+        <ul style="list-style: none;">
+            <li><a href="{% url 'home' %}">HOME</a></li>
+            <li><a href="#">ABOUT</a></li>
+            <li><a href="{% url 'maps' %}">DESTINATIONS</a></li>
+        </ul>
+        
+    </nav>
+    <div class="logoimg">
+        <img src="{% static 'images/wheelielogo.png' %}" alt="" height="120px" width="120px" aria-label="Wheelie Nepal Logo">
+    </div>
+    <nav class="rightnav" aria-label="naviation bar with products, a search bar, cart and user authentication">
+        <ul style="list-style: none;">
+            <li><a href="{% url 'products' %}">PRODUCTS</a></li>
+            <li>
+                <div class="form" aria-label="search a location here by entering a text">
+                    <form method="get" action="/search">
+                    <input type="search" placeholder="Search Location" name="query" id="query" required>
+                    <button aria-label = "search-button" class="search" type="submit"><i class="fa-solid fa-magnifying-glass glass"></i></button>
+                    </form>
+                </div>
+            </li>
+            <li>
+                <div class="from-inline my-2 my-lg-0 cart">
+                    <a href="{% url 'cart' %}">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </a>
+                    <span class="badge badge-info background-yellow">{{cartItems}}</span>
+                </div> 
+            </li>
+            {% if request.user.is_authenticated %}
+            {% if count == 1 %}
+            <li><a href="{% url 'user-profile' %}">Your orders</a></li>
+            {% endif %}
+            <li><a href="{% url 'logout' %}" class="logout">LOGOUT</a></li>
+            {% else %}
+            <li><a href="{% url 'login' %}" class="login">LOGIN</a></li>
+            <li><a href="{% url 'register' %}" class="signup">SIGN UP</a></li>
+            {% endif %}
+            <!--<li>
+                <span onclick="change_icon()" id="dark" ><i class="bi bi-brightness-high on" id="light"></i></span>
+            </li>-->
+        </ul>
+    </nav>
+</header>
+
+<script src="/static/js/main.js"></script>
+
+    <!-- /*let i = 0;
+ 
+    let dark = document.getElementsByTagName('span')[0]
+    const change_icon = () =>{
+        if (i == 0){
+            i = 1;
+            dark.innerHTML = "<i class='bi bi-moon on'></i>";
+        }
+        else{
+            i = 0;
+            dark.innerHTML = "bi bi-brightness-high on";
+        }
+    }*/
+
+   /* let i=0;
+
+        let icon = document.getElementById('dark')
+
+        const change_icon = () =>{
+            if(i==0){
+                i=1;
+                icon.innerHTML="<i class='bi bi-moon on'></i>"
+                document.getElementsByTagName('body')[0].style.backgroundColor = "black"
+                document.getElementsByTagName('body')[0].style.color = "white"
+            }
+            else{
+                i=0;
+                icon.innerHTML="<i class='bi bi-brightness-high on'></i>"
+                document.getElementsByTagName('body')[0].style.backgroundColor = "white"
+                document.getElementsByTagName('body')[0].style.color = "black"
+            }
+        }*/ -->

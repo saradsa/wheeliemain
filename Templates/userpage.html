@@ -1,0 +1,57 @@
+{% extends 'base.html'%} {% load static %} {% static "images" as baseUrl %}
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+<body>
+  {% block content %}
+
+<div style="text-align: center; margin: 0 auto; padding: 50px;">
+  <h1>Your WheelChair orders</h1>
+  
+<table class="table table-primary">
+    <thead>
+      <tr>
+        <th scope="col">Orders</th>
+        <th scope="col">Date_created</th>
+    
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        {% for orders in userOrder%}
+        <td><a href="{% url 'showOrderitems' orders.id %}" style="background: #37002f; color: white; border-radius: 5px; padding: 3px;">View</a></td>
+        <td><a>{{orders.date_ordered}}</a></td>
+      </tr>
+      {% endfor %}
+ 
+    </tbody>
+  </table>
+<hr>
+  <h1>Your Destination orders</h1>
+  
+<table class="table table-primary">
+    <thead>
+      <tr>
+        <th scope="col">Orders</th>
+        <th scope="col">Total</th>
+        <th scope="col">Date_created</th>
+    
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        {% for order in userdestOrder%}
+        <td>{{order.destination}}</td>
+        <td>Rs.&nbsp;{{order.price}}</td>
+        <td>{{order.date_ordered}}</td>
+      </tr>
+      {% endfor %}
+ 
+    </tbody>
+  </table>
+</div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+
+  {% endblock %}
+</body>

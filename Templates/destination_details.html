@@ -1,0 +1,104 @@
+{% extends 'base.html'%} {% load static %} {% static "images" as baseUrl %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/825b56df51.js" crossorigin="anonymous"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/stroll-media.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+    <title>Destinations</title>
+</head>
+<body>
+    {% include 'nav.html' %}
+
+    {% block content %}
+    <div class="first">
+        <h1 style="text-align: center;">{{destination.name}}</h1><br>
+        <div class="dest-full-detail">
+            <div class="ig dest">
+                <img class="blog-img" src="{{destination.imageUrl}}" alt="" width="300" height="300" style="border-radius: 5px;">
+            </div>
+            <div style="width: 60px;"></div>
+            <div>
+                <h3><b>{{destination.description}} $35</b></h3>
+            <br>
+            {% if destination.name == 'Bhaktapur' %}
+            <p>Bhaktapur, also known as Bhadgaon or Khwopa, is a historical city in Nepal, located about 13 kilometers east of the capital, Kathmandu. It is one of the three ancient cities in the Kathmandu Valley and holds great cultural and historical significance.</p>
+            {% elif destination.name == 'Pokhara' %}
+            <p>Pokhara, located in the scenic country of Nepal, is a captivating city nestled amidst the majestic Himalayas. Known as the gateway to the Annapurna Circuit, Pokhara is a paradise for nature enthusiasts and adventure seekers. Its breathtaking landscape boasts the serene Phewa Lake, surrounded by lush hills and reflected snow-capped peaks, creating a mesmerizing sight.</p>
+            {% elif destination.name == 'Nagarkot' %}
+            <p>Nestled in the hills of Nepal, Nagarkot is a picturesque hill station that offers breathtaking panoramic views of the Himalayas. Located just a short distance from Kathmandu, Nagarkot is renowned for its stunning sunrise and sunset vistas. The town is perched at an elevation of approximately 2,195 meters, providing visitors with a refreshing escape from the bustling city life.</p>
+            {% elif destination.name == 'Kathmandu' %}
+            <p>Kathmandu, the vibrant capital city of Nepal, is a captivating blend of ancient traditions and modern influences. Nestled in a valley surrounded by the mighty Himalayas, Kathmandu offers a rich cultural and historical tapestry that enthralls visitors from around the world. The city is renowned for its intricate architecture, with ornate temples, pagodas, and palaces dotting the landscape. </p>
+            {% elif destination.name == 'Lumbini' %}
+            <p>Lumbini, located in the southern region of Nepal, holds immense historical and spiritual significance as the birthplace of Gautam Buddha, the founder of Buddhism. This sacred pilgrimage site attracts followers and curious travelers from all over the world. Lumbini is adorned with serene gardens, monasteries, and ancient ruins that transport visitors back in time.</p>
+            {% elif destination.name == 'Chitwan National Park' %}
+            <p>Chitwan National Park, situated in the southern plains of Nepal, is a haven for wildlife enthusiasts and nature lovers. Recognized as a UNESCO World Heritage Site, it boasts an extraordinary array of flora and fauna, making it one of the most biodiverse regions in Asia. The park is renowned for its population of endangered species, including the majestic Bengal tiger, one-horned rhinoceros, and Asian elephant.</p>
+            {% else %}
+            <p>No content here.</p>
+            {% endif %}
+        </div>
+            
+        </div>
+        
+        
+        
+        <!-- <div class="cover">
+            <div class="blog-image"><img style="margin:10px;height: 50px;
+            width: 50px;
+            border-radius: 50%;" src="images/245lady.jpg" alt=""></div>
+            <div class="name">Charlotte Lucy</div>
+        </div> -->
+        <br>
+        <hr>
+        <br>
+        <br>
+        <div style="background: rgb(238, 235, 235); padding: 10px;">
+            <h2 style="font-size: 30px;">Reviews</h2>
+        <div class="rev-block">
+            <div class="reviews_count">
+                Total Reviews: {{reviews_count}}
+            </div>
+
+            <div class="averge">
+                Average Rating: {{avg_reviews.rating__avg}}/5
+            </div>
+    
+            {% if count == 0 %}
+                <button class="rate-btn"><a href="{%url 'rating' destination.id%}">Rate this place</a></button>
+            {% endif %}
+        </div>
+        <hr>
+
+        
+
+        {% for review in reviews%}
+
+        <div class="review-main" style="margin-top: 25px;" aria-label="Review by {{review.user}} which says {{review.description}} and gives {{review.rating}} stars on {{review.created_at}}">
+            <div class="review-img">
+                <img src="{% static 'images/profile.png' %}" alt="" width="50" height="50">
+            </div>
+            <div class="review-body" style="margin-left: 20px;">
+                <p><strong>{{review.user}}</strong> <span style="font-size: 12px;">Posted at&nbsp;{{review.created_at}}</span></p>
+                <p>Review:- {{review.description}}</p>
+                <p>Rating:- {{review.rating}}/5</p>
+            </div>
+            {%if review.user == request.user %}
+                <button style="width: 80px; height: 30px; margin-left: 20px; background: #37002f;"><a href="{% url 'update_review' review_id=review.id dest_id=destination.id %}" style="color: white;">Update</a></button>
+                <button style="width: 80px; height: 30px; margin-left: 20px; background: #db0054;"><a href="{% url 'delete_review' review_id=review.id dest_id=destination.id %}" style="color: white;">Delete</a></button>
+            {% endif %}
+        </div>
+        {% endfor %}
+        </div>
+        
+        
+    {% endblock %}
+</body>
+</html>

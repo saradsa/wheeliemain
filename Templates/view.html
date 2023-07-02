@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+{% load static %}
+<html>
+
+<head>
+	<script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
+</head>
+
+
+<body>
+
+	{% block content %}
+
+	<h1 style="text-align: center;">Place an Order</h1>
+
+	<div class="ship-and-cart">
+		<div>
+			<div class="cart-info cart-info-addon">
+				<table>
+					<tr>
+						<td><h3>Items:&nbsp;</h3></td>
+						<td><strong>{{order.get_cart_items_number}}</strong></td>
+					</tr>
+					<tr>
+						<td><h3>Total:&nbsp;</h3></td>
+						<td><strong>{{order.get_cart_total}}</strong></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div>
+			<div class="box-element cart-info-addon2" id="payment-info">
+				<p style="margin-right: 13px;">Confirm Order:</p>
+				<!-- Place this where you need payment button -->
+				<button id="payment-button" onclick="submitFormData()" style="background: #37002f; color: white; border-radius: 5px; font-size: 20px; padding: 5px;">Pay with Khalti</button>
+				<!-- Place this where you need payment button --> 
+				<!-- Paste this code anywhere in you body tag -->
+			</div>
+		</div>
+		<!--<div>
+			<div class="cart-info cart-info-addon2">
+				<h3>Shipping Details:</h3>
+				<form id="form">
+					
+						<div class="form-field">
+							<input required class="form-control" type="text" name="name" placeholder="Name.."
+								autocomplete="off">
+						</div>
+						<div class="form-field">
+							<input required class="form-control" type="email" name="email" placeholder="Email.. "
+								autocomplete="off">
+						</div>
+						<div class="form-field">
+							<input class="form-control" type="text" name="address" placeholder="Address.." autocomplete="off">
+						</div>
+						<div class="form-field">
+							<input class="form-control " type="text" name="city" placeholder="City..">
+						</div>
+						<div class="form-field">
+							<input class="form-control" type="text" name="state" placeholder="State..">
+						</div>
+						<div class="form-field">
+							<input class="form-control" type="text" name="zipcode" placeholder="Zip code..">
+						</div>
+						<div class="form-field">
+							<input class="form-control" type="text" name="country" placeholder="Country..">
+						</div>
+					<input id="form-button" class="btn btn-success btn-block" type="submit" value="Continue with Payment" style="background-color: #37002f; color: white; border-radius: 5px;">
+				</form>
+			</div>
+		</div>-->
+	</div>
+
+	
+
+	<div class="row">
+
+		<div class="col-lg-6">
+			<div class="box-element">
+				<a class="btn btn-outline-dark" href="{% url 'cart' %}" style="padding: 10px;">&#x2190; Back to Cart</a>
+				<br>
+				<h3 style="padding: 10px;">Order Summary</h3>
+				<hr>
+				{% for item in items %}
+				<div class="cart-row">
+					<div style="flex:2; padding: 10px;"><img class="row-image" src="{{ item.product.imageURL}}"></div>
+					<div style="flex:2">
+						<p>{{item.product.name}}</p>
+					</div>
+					<div style="flex:1">
+						<p>{{item.product.price}}</p>
+					</div>
+					<div style="flex:1">
+						<p>{{item.quantity}}</p>
+					</div>
+				</div>
+				{% endfor%}
+			</div>
+		</div>
+	</div>
+	</div>
+
+	
+
+	<script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+		<script>
+
+			var config = {
+				// replace the publicKey with yours
+				"publicKey": "test_public_key_3e3bef2906e149e1aca57535b13b6ebd",
+				"productIdentity": "order_{{order.id}}",
+				"productName": "order_{{order.id}}",
+				"productUrl": "http://localhost:8000",
+				"paymentPreference": [
+					"KHALTI",
+					"EBANKING",
+					"MOBILE_BANKING",
+					"CONNECT_IPS",
+					"SCT",
+				],
+				"eventHandler": {
+					onSuccess(payload) {
+						// hit merchant api for initiating verfication
+						axios.get("/khalti-verify-cart",{
+							params: {
+								"token": payload.token,
+								"amount": payload.amount,
+								"order_id" : "{{order.id}}"
+							}
+						}).then(function(resp){
+							if(resp.data.success = "success"){
+								alert("Payment Completed Successfully")
+								window.location.href = "{% url 'home' %}"
+							}
+							else{
+								alert("Sorry!!Error Occured")
+								window.location.href = "{{request.build_absolute_uri}}"
+							}
+						})
+						console.log(payload);
+					},
+					onError(error) {
+						console.log(error);
+					},
+					onClose() {
+						console.log('widget is closing');
+					}
+				}
+			};
+
+			var checkout = new KhaltiCheckout(config);
+			var btn = document.getElementById("payment-button");
+			btn.onclick = function () {
+				// minimum transaction amount must be 10, i.e 1000 in paisa.
+				checkout.show({ amount: {{order.get_cart_total}}*100 });
+			}
+
+			<!-- Paste this code anywhere in you body tag -->
+		</script>
+
+		{% endblock content %}
+</body>
+
+
+
+</html>
